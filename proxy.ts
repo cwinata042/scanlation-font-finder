@@ -6,6 +6,6 @@ export default auth.middleware({
 export const config = {
   matcher: [
     // Protected routes requiring authentication
-    "/admin/:path*",
+    "/temp",
   ],
 };
