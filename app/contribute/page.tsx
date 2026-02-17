@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuLoaderCircle } from "react-icons/lu";
+import Header from "../_components/Header";
 
 export default function Admin() {
   const queryClient = useQueryClient();
@@ -71,6 +72,7 @@ export default function Admin() {
 
   return (
     <>
+      <Header currTab="Contribute" />
       <form
         autoComplete="off"
         className="add-question-form"

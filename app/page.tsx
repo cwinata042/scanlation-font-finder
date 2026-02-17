@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/app/_components/Header";
 import { getFontData } from "@/lib/actions/fontAction";
 import { GET_FONTS_QUERY_KEY } from "@/lib/queryKeys";
 import { useQuery } from "@tanstack/react-query";
@@ -19,5 +20,9 @@ export default function Fonts() {
     return <div>{font.name}</div>;
   });
 
-  return <>{fontList}</>;
+  return (
+    <>
+      <Header currTab="Identifier" /> {fontList}
+    </>
+  );
 }

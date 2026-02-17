@@ -1,40 +1,105 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@100..1000");
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant");
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+SC");
 
 :root {
-  --background: #ffffff;
-  --input-bg: rgb(226, 226, 226);
-  --foreground: #171717;
+  --dark: #3c252b;
+  --dark-red: #7c1517;
+  --light: #fffaf6;
+  --accent-1: #ac3f34;
+  --accent-2: #2f3f9e;
+  --accent-3: #ffd56c;
+  --light-gray: #ecdbcd;
+  --gray: #d3c8b5;
+  --dark-gray: #b09174;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  font-family: "Ysabeau Infant", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Ysabeau SC", sans-serif;
+}
+
+a {
+  color: var(--dark);
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  outline: none;
+  background: none;
+  border: none;
+
+  font-family: "Ysabeau Infant", sans-serif;
+  cursor: pointer;
 }
 
 input,
 textarea {
   padding: 10px;
   font-size: 16px;
-  font-family: "DM Sans", sans-serif;
+
   background: var(--input-bg);
-  border: none;
-  color: var(--foreground);
-  outline: none;
+  border: 1px solid var(--dark);
+
   width: 100%;
-  cursor: pointer;
+}
+
+.header {
+  padding: 10px 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--dark);
+  color: var(--light);
+
+  font-family: "Ysabeau SC", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar > a {
+  color: var(--light);
+
+  font-size: 20px;
+}
+
+.navbar > a.selected {
+  color: var(--accent-3);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-container {
+  position: relative;
+  width: 43px;
+  height: 43px;
 }
