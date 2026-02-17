@@ -1,13 +1,14 @@
 "use client";
 
 import { addQuestion, getQuestionData } from "@/lib/actions/questionAction";
-import { GET_QUESTIONS_QUERY_KEY } from "@/lib/queryKeys";
+import { GET_FONTS_QUERY_KEY, GET_QUESTIONS_QUERY_KEY } from "@/lib/queryKeys";
 import { TAddQuestionFormValues } from "@/lib/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuLoaderCircle } from "react-icons/lu";
 import Header from "../_components/Header";
+import { getFontData } from "@/lib/actions/fontAction";
 
 export default function Admin() {
   const queryClient = useQueryClient();
@@ -34,7 +35,12 @@ export default function Admin() {
     queryFn: async () => getQuestionData(),
   });
 
-  if (!data) {
+  const { data: fontData, status: fontFetchStatus } = useQuery({
+    queryKey: [GET_FONTS_QUERY_KEY],
+    queryFn: async () => getFontData(),
+  });
+
+  if (!fontData || !data) {
     return <LuLoaderCircle className="loader lg" />;
   }
 
@@ -70,39 +76,68 @@ export default function Admin() {
     mutate();
   };
 
+  const fontList = fontData.map((font) => {
+    return (
+      <div key={`${font.name}-${font.id}`} className="font-card">
+        <div className="font-name-container">
+          <div className="font-name">{font.name}</div>
+          <div className="line"></div>
+        </div>
+        <div className="font-completion">
+          <progress max="40" value="8"></progress>
+          <div className="progress-text">8/40 Answered</div>
+        </div>
+      </div>
+    );
+  });
+
   return (
     <>
       <Header currTab="Contribute" />
-      <form
-        autoComplete="off"
-        className="add-question-form"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div>Add New Question</div>
-        <label htmlFor={"question"}>Question*:</label>
-        <input
-          type="text"
-          key="question"
-          {...register("question", { required: true })}
-        />
-        <label htmlFor={"question"}>Associated Character:</label>
-        <input type="text" key="character" {...register("character")} />
-        <label htmlFor={"question"}>Details:</label>
-        <input type="text" key="details" {...register("details")} />
-        <div className="answers-list">
-          {answersList}
-          <button
-            className="add"
-            type="button"
-            onClick={() => appendAnswer({ answer: "", cldimg_id: null })}
-          >
-            Add Answer
-          </button>
+      <main className="main">
+        <div className="search">
+          <input type="search" placeholder="Search for font name"></input>
+          <div className="sort">
+            <p className="sort-label">Sort By</p>
+            <p className="sort-category">Completion</p>
+          </div>
         </div>
-        <input className="button" type="submit" value="Add Question" />
-      </form>
-      <br></br>
-      <div className="questions-list">All Questions{questionList}</div>
+        <div className="font-list">{fontList}</div>
+        <div className="add-buttons">
+          <button className="outline red">Add Question</button>
+          <button className="outline red">Add Font</button>
+        </div>
+        {/* <form
+          autoComplete="off"
+          className="add-question-form form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div>Add New Question</div>
+          <label htmlFor={"question"}>Question*:</label>
+          <input
+            type="text"
+            key="question"
+            {...register("question", { required: true })}
+          />
+          <label htmlFor={"question"}>Associated Character:</label>
+          <input type="text" key="character" {...register("character")} />
+          <label htmlFor={"question"}>Details:</label>
+          <input type="text" key="details" {...register("details")} />
+          <div className="answers-list">
+            {answersList}
+            <button
+              className="add"
+              type="button"
+              onClick={() => appendAnswer({ answer: "", cldimg_id: null })}
+            >
+              Add Answer
+            </button>
+          </div>
+          <input className="button" type="submit" value="Add Question" />
+        </form>
+        <br></br>
+        <div className="questions-list">All Questions{questionList}</div> */}
+      </main>
     </>
   );
 }
